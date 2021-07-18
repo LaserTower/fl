@@ -14,8 +14,18 @@ class CheckInnController extends Controller
         $inn = new Inn();
         $error = false;
         $success = false;
+        
+        $number = $request->get('inn');
+        
+        if(!$inn->validate($number)){
+            return [
+                'success' => false,
+                'error' => 'не корректный номер'
+            ];
+        }
+        
         try {
-            $res = $inn->check($request->get('inn'));
+            $res = $inn->check($number);
             if ($res->status) {
                 $success = $res->message;
             } else {
