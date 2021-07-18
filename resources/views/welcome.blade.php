@@ -26,7 +26,7 @@
   <span class="input-group-text">ИНН физического лица</span>
   <input type="text" class="form-control" v-model="input">
   
-    <button v-on:click="check" class="btn btn-info">проверить</button>
+    <button v-on:click="check" class="btn btn-info">Отправить</button>
 </div>
  <p class="small text-danger" v-if="check_data.error">@{{check_data.error}}</p>
  <p class="small text-success" v-if="check_data.success" >@{{check_data.success}}</p>
@@ -46,7 +46,7 @@
                    this.check_data = window.VueRequest.useRequest({
                          url: 'api/inn_check',
                          method: 'POST',
-                         body: JSON.stringify(this.input),
+                         body: JSON.stringify({'inn': this.input}),
                          headers: new Headers({
                              'Content-Type': 'application/json',
                          }),

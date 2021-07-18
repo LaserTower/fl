@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\CheckInnController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,9 +14,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::/*middleware('auth:api')->*/post('/inn_check', function (Request $request) {
-    return [
-        'success'=>'норм',
-        'error'=>'вот'
-    ];
-});
+Route::post('/inn_check', [CheckInnController::class, 'check']);
