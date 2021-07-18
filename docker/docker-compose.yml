@@ -1,0 +1,30 @@
+version: '3.9'
+
+services:
+  server:
+    build:
+      context: .
+      dockerfile: ./server/Dockerfile
+    container_name: '${APP_NAME}-server'
+    ports:
+      - 8080:8080
+    working_dir: /var/www/fl
+    volumes:
+      - ../:/var/www/fl
+    environment:
+      - 'DATABASE_URL=mysql://${MYSQL_USER}:${MYSQL_PASS}@db_server:3306/${MYSQL_DB}'
+    depends_on:
+      - db_server
+    command: php artisan serve --port=8080 --host 0.0.0.0
+
+  db_server:
+    image: mysql:8
+    container_name: '${APP_NAME}-db'
+    ports:
+      - '${DB_PORT}:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASS}'
+      MYSQL_USER: '${MYSQL_USER}'
+      MYSQL_PASSWORD: '${MYSQL_PASS}'
+      MYSQL_DATABASE: '${MYSQL_DB}'
+
